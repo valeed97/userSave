@@ -21,6 +21,22 @@ app.get('/',(req,res)=>{
     res.status(200).send({msg:"API is working",data:"",err:""});
 })
 
+app.get('/show-user',(req,res)=>{
+    try{
+        await userModel.find().then((data)=>{
+            if(data.length > 0){
+                res.status(200).send({success: true, msg:"Data is saved successfully", data:data, err:""});
+            }else{
+                res.status(201).send({success: false, msg:"No data found", data:"", err:""});
+            }
+            
+        })
+    }
+    catch(err){
+        res.status(404).send({success: false, msg:"forbidden"})
+    }
+})
+
 app.post('/save-user',async (req, res)=>{
     try{
         let name = null, email = null,phone= null,desc=null
